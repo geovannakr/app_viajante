@@ -17,6 +17,7 @@ class _UserTravelScreenState extends State<UserTravelScreen> {
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
 
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +51,11 @@ void _saveUserData() async {
   await prefs.setInt('user_age', age);
   await prefs.setString('user_country', country);
 }
-
+String getCountryFlag(String countryCode) {
+    if (countryCode.length != 2 || !RegExp(r'^[A-Z]{2}$').hasMatch(countryCode)) return '🏳️';
+    return String.fromCharCode(0x1F1E6 + countryCode.codeUnitAt(0) - 'A'.codeUnitAt(0)) +
+           String.fromCharCode(0x1F1E6 + countryCode.codeUnitAt(1) - 'A'.codeUnitAt(0));
+  }
 _buildUserTravelScreenBody(){
   return Column(
     children: [
@@ -64,12 +69,19 @@ _buildUserTravelScreenBody(){
           keyboardType: TextInputType.number,
         ),
         TextField(
-          controller: _countryController,
-          decoration: InputDecoration(labelText: 'País Favorito'),
-        ),
+            controller: _countryController,
+            textCapitalization: TextCapitalization.characters,
+            decoration: InputDecoration(
+              labelText: 'País',
+              suffixText: getCountryFlag(_countryController.text.toUpperCase()),
+            ),
+            onChanged: (text) {
+              setState(() {}); // Atualiza a bandeira ao digitar
+            },
+          ),
         Row(
           children: [
-            ElevatedButton(onPressed: _saveUserData, child: Text('Salvar')),
+            ElevatedButton(onPressed: _saveUserData, child: Text('Salvar dados')),
             ElevatedButton(onPressed: _loadUserData, child: Text('Carregar da memória')),
             ElevatedButton(onPressed: _resetUserData, child: Text('Limpar dados')),
           ],
@@ -78,10 +90,12 @@ _buildUserTravelScreenBody(){
   );
 }
 
+
 void _resetUserData() async {
     setState(() {
       _nameController.text = "";
       _ageController.text = "";
+      _countryController.text = "";
     });
   }
 }
