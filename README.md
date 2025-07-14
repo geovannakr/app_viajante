@@ -8,8 +8,11 @@ Este é um **aplicativo mobile** desenvolvido principalmente com **Flutter** e i
 * **HTML e outros recursos** – Enriquecem elementos visuais e funcionais.
 
 **Funcionalidades principais:**
+
 **Login simples** — O usuário cria e acessa seu perfil de forma prática.
+
 **Cadastro de país favorito** — Você escolhe seu país preferido e salva no app.
+
 **Visualização personalizada** — Ao selecionar o país, o aplicativo exibe automaticamente a **bandeira correspondente**, criando uma experiência interativa e visualmente envolvente.
 
 **Por que é especial?**
